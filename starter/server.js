@@ -27,8 +27,6 @@ async function connectToDatabase() {
       console.error('Error connecting to MongoDB:', error);
       process.exit(1);
     }
-    
-  console.log('TODO: implement connectToDatabase()');
 }
 
 app.locals.publicDir = publicDir;
