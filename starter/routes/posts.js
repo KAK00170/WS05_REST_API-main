@@ -56,14 +56,18 @@ router.put('/:id', async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
   // TODO: Validate req.params.id using isValidObjectId().
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ error: 'Invalid post id' });
+    }
   // TODO: Delete the post by id.
+  const deletedPost = await Post.findByIdAndDelete(id);
   // TODO: Return a success message as JSON.
-  if (!isValidObjectId(req.params.id)) {
-    return res.status(400).json({ error: 'Invalid post id' });
-  }
-
-  return res.status(501).json({ message: 'TODO: implement DELETE /api/posts/:id' });
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    return res.json({ message: 'Post deleted successfully' });
 });
 
 module.exports = router;
